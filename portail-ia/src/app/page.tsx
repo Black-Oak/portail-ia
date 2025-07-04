@@ -19,8 +19,10 @@ export default function Home() {
             "Simulation : Ouverture de l'interface pour ajouter une nouvelle application..."
           );
         } else {
-          const appName = brick.querySelector("h3")?.textContent;
-          alert(`Simulation : Lancement de l'application "${appName}"...`);
+          if (!(brick instanceof HTMLAnchorElement)) {
+            const appName = brick.querySelector("h3")?.textContent;
+            alert(`Simulation : Lancement de l'application "${appName}"...`);
+          }
         }
       }
 
@@ -98,24 +100,40 @@ export default function Home() {
               },
               {
                 icon: "fa-file-signature",
-                label: "Assistant Proposition commercial",
+                label: "Générateur de contenu",
+                href: "/generation-contenu",
               },
               { icon: "fa-robot", label: "Chatbot RH" },
               { icon: "fa-address-card", label: "Matching de CV" },
               { icon: "fa-file-word", label: "Mise au format de document" },
-            ].map((app, idx) => (
-              <div
-                key={idx}
-                className="app-brick bg-surface rounded-lg p-8 text-center cursor-pointer border-2 border-transparent hover:-translate-y-2 hover:border-primaryGold transition flex flex-col justify-center items-center"
-              >
-                <i
-                  className={`fa-solid ${app.icon} text-4xl text-primaryGold mb-4`}
-                ></i>
-                <h3 className="text-base font-semibold flex-grow">
-                  {app.label}
-                </h3>
-              </div>
-            ))}
+            ].map((app, idx) =>
+              app.href ? (
+                <a
+                  key={idx}
+                  href={app.href}
+                  className="app-brick bg-surface rounded-lg p-8 text-center cursor-pointer border-2 border-transparent hover:-translate-y-2 hover:border-primaryGold transition flex flex-col justify-center items-center no-underline"
+                >
+                  <i
+                    className={`fa-solid ${app.icon} text-4xl text-primaryGold mb-4`}
+                  ></i>
+                  <h3 className="text-base font-semibold flex-grow">
+                    {app.label}
+                  </h3>
+                </a>
+              ) : (
+                <div
+                  key={idx}
+                  className="app-brick bg-surface rounded-lg p-8 text-center cursor-pointer border-2 border-transparent hover:-translate-y-2 hover:border-primaryGold transition flex flex-col justify-center items-center"
+                >
+                  <i
+                    className={`fa-solid ${app.icon} text-4xl text-primaryGold mb-4`}
+                  ></i>
+                  <h3 className="text-base font-semibold flex-grow">
+                    {app.label}
+                  </h3>
+                </div>
+              )
+            )}
             <div className="app-brick add-new border-2 border-dashed border-[#555] bg-surface rounded-lg p-8 text-center cursor-pointer hover:border-primaryGold transition flex flex-col justify-center items-center">
               <i className="fa-solid fa-plus text-4xl text-[#777] hover:text-primaryGold transition-colors mb-4"></i>
               <h3 className="text-base font-semibold flex-grow">Ajouter</h3>
