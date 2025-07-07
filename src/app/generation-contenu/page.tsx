@@ -85,9 +85,6 @@ export default function App() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const accentColor = "#E1B000"; // Gold accent color
 
-  // Hardcoded API Key
-  const HARDCODED_API_KEY = "AIzaSyAC3JWwQ3_mZwHYVZxcYbFlhB3Y2a6_hX0";
-
   // Load pdf.js script
   useEffect(() => {
     const script = document.createElement("script");
@@ -142,9 +139,7 @@ export default function App() {
         // Type assertion for pdf.js PDFDocumentProxy
         type PDFDocumentProxy = {
           numPages: number;
-          getPage: (
-            pageNumber: number
-          ) => Promise<{
+          getPage: (pageNumber: number) => Promise<{
             getTextContent: () => Promise<{ items: { str: string }[] }>;
           }>;
         };
@@ -190,9 +185,16 @@ export default function App() {
   };
 
   const callGeminiAPI = async (prompt: string) => {
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error(
+        "Clé API Gemini non configurée dans les variables d'environnement"
+      );
+    }
+
     const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
     const payload = { contents: chatHistory };
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${HARDCODED_API_KEY}`;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
     const response = await fetch(apiUrl, {
       method: "POST",
