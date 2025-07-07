@@ -1,4 +1,5 @@
 import "./globals.css";
+import AuthProvider from "../components/AuthProvider";
 
 export const metadata = {
   title: "IA Platform Solution - Accueil",
@@ -28,7 +29,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-textLight font-poppins">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

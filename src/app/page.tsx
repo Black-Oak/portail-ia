@@ -2,8 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
+
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "/auth/signin" });
+  };
+
   return (
     <div className="font-poppins bg-background text-textLight w-screen h-screen overflow-auto">
       {/* Header */}
@@ -19,8 +26,20 @@ export default function Home() {
           />
           <h1 className="text-xl font-semibold">AI Platform Solution</h1>
         </div>
-        <div className="user-profile">
-          <i className="fa-solid fa-user text-2xl cursor-pointer hover:text-primaryGold transition-colors"></i>
+        <div className="user-section flex items-center gap-4">
+          <div className="flex items-center gap-2 text-primaryGold">
+            <i className="fa-solid fa-user"></i>
+            <span className="font-medium">
+              {session?.user?.name || session?.user?.email || "Utilisateur"}
+            </span>
+          </div>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all font-medium"
+          >
+            <i className="fa-solid fa-sign-out-alt"></i>
+            Se déconnecter
+          </button>
         </div>
       </header>
 

@@ -40,7 +40,7 @@ export default function SyntheseDocumentPage() {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [isPdfJsLoaded, setIsPdfJsLoaded] = useState<boolean>(false);
-  const accentColor = "#E1B000"; // Gold accent color consistent with other pages
+  const accentColor = "#DAA520";
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -393,9 +393,7 @@ export default function SyntheseDocumentPage() {
                   </span>{" "}
                   ou glissez-déposez un fichier
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  TXT, PDF {isPdfJsLoaded ? "(✓ Chargé)" : "(Chargement...)"}
-                </p>
+                <p className="text-xs text-gray-500 mt-1">TXT, PDF</p>
                 {fileName && (
                   <p className="mt-4 text-gray-300 font-medium">{fileName}</p>
                 )}
